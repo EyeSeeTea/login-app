@@ -13,6 +13,7 @@ export const LoginErrors = ({
     accountInaccessible,
     unknownStatus,
     emailTwoFAIncorrect,
+    smsTwoFAIncorrect,
     isResetButtonPressed,
     twoFACodeRequired,
     twoFAVerificationRequired,
@@ -62,6 +63,14 @@ export const LoginErrors = ({
         )
     }
     if (emailTwoFAIncorrect && !isResetButtonPressed) {
+        return (
+            <FormNotice
+                title={i18n.t('Incorrect authentication code', { lngs })}
+                error
+            />
+        )
+    }
+    if (smsTwoFAIncorrect && !isResetButtonPressed) {
         return (
             <FormNotice
                 title={i18n.t('Incorrect authentication code', { lngs })}
@@ -125,6 +134,7 @@ LoginErrors.propTypes = {
     lngs: PropTypes.arrayOf(PropTypes.string),
     passwordExpired: PropTypes.bool,
     passwordResetEnabled: PropTypes.bool,
+    smsTwoFAIncorrect: PropTypes.bool,
     twoFACodeRequired: PropTypes.bool,
     twoFAIncorrect: PropTypes.bool,
     twoFAVerificationRequired: PropTypes.bool,
