@@ -10,9 +10,11 @@ export const LoginForm = ({
     cancelTwoFA,
     twoFAVerificationRequired,
     emailtwoFAVerificationRequired,
+    smsTwoFAVerificationRequired,
     twoFACodeRequired,
     twoFAIncorrect,
     emailTwoFAIncorrect,
+    smsTwoFAIncorrect,
     accountInaccessible,
     passwordExpired,
     passwordResetEnabled,
@@ -54,6 +56,7 @@ export const LoginForm = ({
                 accountInaccessible={accountInaccessible}
                 unknownStatus={unknownStatus}
                 emailTwoFAIncorrect={emailTwoFAIncorrect}
+                smsTwoFAIncorrect={smsTwoFAIncorrect}
                 isResetButtonPressed={isResetButtonPressed}
                 twoFACodeRequired={twoFACodeRequired}
                 twoFAVerificationRequired={twoFAVerificationRequired}
@@ -67,7 +70,9 @@ export const LoginForm = ({
                         twoFAVerificationRequired={twoFAVerificationRequired}
                         showResentCode={
                             emailtwoFAVerificationRequired ||
-                            emailTwoFAIncorrect
+                            emailTwoFAIncorrect ||
+                            smsTwoFAVerificationRequired ||
+                            smsTwoFAIncorrect
                         }
                         resendTwoFACode={resendTwoFACode}
                         twoFAIncorrect={twoFAIncorrect}
@@ -97,6 +102,8 @@ LoginForm.propTypes = {
     passwordResetEnabled: PropTypes.bool,
     resendTwoFACode: PropTypes.func,
     setFormUserName: PropTypes.func,
+    smsTwoFAIncorrect: PropTypes.bool,
+    smsTwoFAVerificationRequired: PropTypes.bool,
     twoFACodeRequired: PropTypes.bool,
     twoFAIncorrect: PropTypes.bool,
     twoFAVerificationRequired: PropTypes.bool,

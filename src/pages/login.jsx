@@ -30,6 +30,8 @@ export const LoginFormContainer = () => {
         OTPtwoFAVerificationRequired,
         emailtwoFAVerificationRequired,
         emailTwoFAIncorrect,
+        smsTwoFAVerificationRequired,
+        smsTwoFAIncorrect,
         twoFAIncorrect,
         accountInaccessible,
         passwordExpired,
@@ -69,6 +71,16 @@ export const LoginFormContainer = () => {
                     </p>
                 </FormSubtitle>
             )}
+            {(smsTwoFAVerificationRequired || smsTwoFAIncorrect) && (
+                <FormSubtitle>
+                    <p>
+                        {i18n.t(
+                            'We have sent you an SMS with your authentication code. Enter it below to log in.',
+                            { lngs }
+                        )}
+                    </p>
+                </FormSubtitle>
+            )}
             <LoginForm
                 setFormUserName={setFormUserName}
                 lngs={lngs}
@@ -77,8 +89,10 @@ export const LoginFormContainer = () => {
                 resendTwoFACode={resendTwoFACode}
                 twoFAVerificationRequired={twoFAVerificationRequired}
                 emailtwoFAVerificationRequired={emailtwoFAVerificationRequired}
+                smsTwoFAVerificationRequired={smsTwoFAVerificationRequired}
                 twoFAIncorrect={twoFAIncorrect}
                 emailTwoFAIncorrect={emailTwoFAIncorrect}
+                smsTwoFAIncorrect={smsTwoFAIncorrect}
                 twoFACodeRequired={twoFACodeRequired}
                 accountInaccessible={accountInaccessible}
                 passwordExpired={passwordExpired}
