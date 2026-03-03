@@ -103,7 +103,7 @@ export const LoginFormContainer = () => {
                 error={error}
                 loading={loading}
             />
-            {!twoFAVerificationRequired && (
+            {!twoFAVerificationRequired && !requiresTwoFactorEnrolment && (
                 <>
                     <LoginLinks formUserName={formUserName} />
                     <OIDCLoginOptions />

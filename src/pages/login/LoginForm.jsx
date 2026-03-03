@@ -1,7 +1,9 @@
-import { ReactFinalForm } from '@dhis2/ui'
+import i18n from '@dhis2/d2-i18n'
+import { Button, ReactFinalForm } from '@dhis2/ui'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { checkIsLoginFormValid } from '../../helpers/index.js'
+import { useLoginConfig } from '../../providers/index.js'
 import { InnerLoginForm } from './InnerLoginForm.jsx'
 import { LoginErrors } from './LoginErrors.jsx'
 
@@ -28,6 +30,7 @@ export const LoginForm = ({
 }) => {
     const [formSubmitted, setFormSubmitted] = useState(false)
     const [isResetButtonPressed, setIsResetButtonPressed] = useState(false)
+    const { baseUrl } = useLoginConfig()
 
     if (!login) {
         return null
@@ -64,29 +67,46 @@ export const LoginForm = ({
                 twoFAVerificationRequired={twoFAVerificationRequired}
             />
 
-            <ReactFinalForm.Form onSubmit={handleLogin}>
-                {({ handleSubmit }) => (
-                    <InnerLoginForm
-                        handleSubmit={handleSubmit}
-                        formSubmitted={formSubmitted}
-                        twoFAVerificationRequired={twoFAVerificationRequired}
-                        showResentCode={
-                            emailtwoFAVerificationRequired ||
-                            emailTwoFAIncorrect ||
-                            smsTwoFAVerificationRequired ||
-                            smsTwoFAIncorrect
-                        }
-                        resendTwoFACode={resendTwoFACode}
-                        twoFAIncorrect={twoFAIncorrect}
-                        cancelTwoFA={cancelTwoFA}
-                        lngs={lngs}
-                        loading={loading}
-                        setFormUserName={setFormUserName}
-                        isResetButtonPressed={isResetButtonPressed}
-                        setIsResetButtonPressed={setIsResetButtonPressed}
-                    />
-                )}
-            </ReactFinalForm.Form>
+            {requiresTwoFactorEnrolment && (
+                <div style={{ marginTop: '16px' }}>
+                    <a
+                        href={`${baseUrl}/dhis-web-user-profile/#/twoFactor`}
+                        style={{ display: 'block' }}
+                    >
+                        <Button primary large fluid>
+                            {i18n.t('Set up two-factor authentication', {
+                                lngs,
+                            })}
+                        </Button>
+                    </a>
+                </div>
+            )}
+
+            {!requiresTwoFactorEnrolment && (
+                <ReactFinalForm.Form onSubmit={handleLogin}>
+                    {({ handleSubmit }) => (
+                        <InnerLoginForm
+                            handleSubmit={handleSubmit}
+                            formSubmitted={formSubmitted}
+                            twoFAVerificationRequired={twoFAVerificationRequired}
+                            showResentCode={
+                                emailtwoFAVerificationRequired ||
+                                emailTwoFAIncorrect ||
+                                smsTwoFAVerificationRequired ||
+                                smsTwoFAIncorrect
+                            }
+                            resendTwoFACode={resendTwoFACode}
+                            twoFAIncorrect={twoFAIncorrect}
+                            cancelTwoFA={cancelTwoFA}
+                            lngs={lngs}
+                            loading={loading}
+                            setFormUserName={setFormUserName}
+                            isResetButtonPressed={isResetButtonPressed}
+                            setIsResetButtonPressed={setIsResetButtonPressed}
+                        />
+                    )}
+                </ReactFinalForm.Form>
+            )}
         </>
     )
 }

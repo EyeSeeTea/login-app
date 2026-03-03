@@ -1,5 +1,4 @@
 import i18n from '@dhis2/d2-i18n'
-import { Button } from '@dhis2/ui'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Link } from 'react-router-dom'
@@ -75,16 +74,10 @@ export const LoginErrors = ({
             >
                 <span>
                     {i18n.t(
-                        'Due to policy requirements, two-factor authentication is mandatory. Set up two-factor authentication to continue using the app.',
+                        'Due to security policy requirements, two-factor authentication is mandatory. Set up two-factor authentication to continue using the app.',
                         { lngs }
                     )}
                 </span>
-                <br />
-                <a href="dhis-web-user-profile/#/twoFactor">
-                    <Button primary>
-                        {i18n.t('Set up two-factor authentication', { lngs })}
-                    </Button>
-                </a>
             </FormNotice>
         )
     }
