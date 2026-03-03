@@ -21,6 +21,7 @@ const LOGIN_STATUSES = {
     accountDisabled: 'ACCOUNT_DISABLED',
     accountLocked: 'ACCOUNT_LOCKED',
     accountExpired: 'ACCOUNT_EXPIRED',
+    requiresTwoFactorEnrolment: 'REQUIRES_TWO_FACTOR_ENROLMENT',
 }
 const invalidTWOFA = [
     LOGIN_STATUSES.incorrect2faEmail,
@@ -183,6 +184,8 @@ export const useLogin = () => {
             loginStatus === LOGIN_STATUSES.incorrect2faSMS,
         twoFANotEnabled: loginStatus === LOGIN_STATUSES.notEnabled2fa,
         passwordExpired: loginStatus === LOGIN_STATUSES.passwordExpired,
+        requiresTwoFactorEnrolment:
+            loginStatus === LOGIN_STATUSES.requiresTwoFactorEnrolment,
         accountInaccessible: inaccessibleAccountStatuses.includes(loginStatus),
         twoFACodeRequired,
         unknownStatus:

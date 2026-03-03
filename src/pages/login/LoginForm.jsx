@@ -13,6 +13,7 @@ export const LoginForm = ({
     smsTwoFAVerificationRequired,
     twoFACodeRequired,
     twoFAIncorrect,
+    requiresTwoFactorEnrolment,
     emailTwoFAIncorrect,
     smsTwoFAIncorrect,
     accountInaccessible,
@@ -51,6 +52,7 @@ export const LoginForm = ({
                 lngs={lngs}
                 error={error}
                 twoFAIncorrect={twoFAIncorrect}
+                requiresTwoFactorEnrolment={requiresTwoFactorEnrolment}
                 passwordExpired={passwordExpired}
                 passwordResetEnabled={passwordResetEnabled}
                 accountInaccessible={accountInaccessible}
@@ -100,6 +102,7 @@ LoginForm.propTypes = {
     login: PropTypes.func,
     passwordExpired: PropTypes.bool,
     passwordResetEnabled: PropTypes.bool,
+    requiresTwoFactorEnrolment: PropTypes.bool,
     resendTwoFACode: PropTypes.func,
     setFormUserName: PropTypes.func,
     smsTwoFAIncorrect: PropTypes.bool,

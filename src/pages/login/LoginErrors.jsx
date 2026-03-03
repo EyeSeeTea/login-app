@@ -1,4 +1,5 @@
 import i18n from '@dhis2/d2-i18n'
+import { Button } from '@dhis2/ui'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Link } from 'react-router-dom'
@@ -8,6 +9,7 @@ export const LoginErrors = ({
     lngs = ['en'],
     error,
     twoFAIncorrect,
+    requiresTwoFactorEnrolment,
     passwordExpired,
     passwordResetEnabled,
     accountInaccessible,
@@ -62,6 +64,31 @@ export const LoginErrors = ({
             />
         )
     }
+
+    if (requiresTwoFactorEnrolment) {
+        return (
+            <FormNotice
+                title={i18n.t('Two-factor authentication setup required', {
+                    lngs,
+                })}
+                error
+            >
+                <span>
+                    {i18n.t(
+                        'Due to policy requirements, two-factor authentication is mandatory. Set up two-factor authentication to continue using the app.',
+                        { lngs }
+                    )}
+                </span>
+                <br />
+                <a href="dhis-web-user-profile/#/twoFactor">
+                    <Button primary>
+                        {i18n.t('Set up two-factor authentication', { lngs })}
+                    </Button>
+                </a>
+            </FormNotice>
+        )
+    }
+
     if (emailTwoFAIncorrect && !isResetButtonPressed) {
         return (
             <FormNotice
@@ -134,6 +161,7 @@ LoginErrors.propTypes = {
     lngs: PropTypes.arrayOf(PropTypes.string),
     passwordExpired: PropTypes.bool,
     passwordResetEnabled: PropTypes.bool,
+    requiresTwoFactorEnrolment: PropTypes.bool,
     smsTwoFAIncorrect: PropTypes.bool,
     twoFACodeRequired: PropTypes.bool,
     twoFAIncorrect: PropTypes.bool,

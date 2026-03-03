@@ -5,13 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-03-05T07:31:43.512Z\n"
-"PO-Revision-Date: 2025-03-05T07:31:43.528Z\n"
-"POT-Creation-Date: 2025-03-04T11:41:36.161Z\n"
-"PO-Revision-Date: 2025-03-04T11:41:36.161Z\n"
-"POT-Creation-Date: 2025-02-17T15:56:02.338Z\n"
-"PO-Revision-Date: 2025-02-17T15:56:02.338Z\n"
-
+"POT-Creation-Date: 2026-03-02T15:13:18.441Z\n"
+"PO-Revision-Date: 2026-03-02T15:13:18.441Z\n"
 
 msgid "Please confirm that you are not a robot by checking the checkbox."
 msgstr "Please confirm that you are not a robot by checking the checkbox."
@@ -198,6 +193,19 @@ msgstr "Authentication code is required"
 
 msgid "Incorrect authentication code"
 msgstr "Incorrect authentication code"
+
+msgid "Two-factor authentication setup required"
+msgstr "Two-factor authentication setup required"
+
+msgid ""
+"Due to policy requirements, two-factor authentication is mandatory. Set up "
+"two-factor authentication to continue using the app."
+msgstr ""
+"Due to policy requirements, two-factor authentication is mandatory. Set up "
+"two-factor authentication to continue using the app."
+
+msgid "Set up two-factor authentication"
+msgstr "Set up two-factor authentication"
 
 msgid "Password expired"
 msgstr "Password expired"
