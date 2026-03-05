@@ -377,13 +377,13 @@ describe('LoginForm', () => {
         ).toBeInTheDocument()
         expect(
             screen.getByText(
-                'Due to policy requirements, two-factor authentication is mandatory. Set up two-factor authentication to continue using the app.'
+                'Due to security policy requirements, two-factor authentication is mandatory. Set up two-factor authentication to continue using the app.'
             )
         ).toBeInTheDocument()
         expect(
             screen.getByRole('link', {
                 name: 'Set up two-factor authentication',
             })
-        ).toHaveAttribute('href', 'dhis-web-user-profile/#/twoFactor')
+        ).toHaveAttribute('href', '/dhis-web-user-profile/#/twoFactor')
     })
 })

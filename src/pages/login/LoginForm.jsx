@@ -70,7 +70,7 @@ export const LoginForm = ({
             {requiresTwoFactorEnrolment && (
                 <div style={{ marginTop: '16px' }}>
                     <a
-                        href={`${baseUrl}/dhis-web-user-profile/#/twoFactor`}
+                        href={`${baseUrl ?? ''}/dhis-web-user-profile/#/twoFactor`}
                         style={{ display: 'block' }}
                     >
                         <Button primary large fluid>
