@@ -363,27 +363,38 @@ describe('LoginForm', () => {
         ).toBeInTheDocument()
     })
 
-    it('Shows mandatory 2FA enrolment notice and link button', () => {
-        useLogin.mockReturnValue({
-            login: () => {},
-            requiresTwoFactorEnrolment: true,
-            cancelTwoFA: () => {},
-        })
+    it('Shows mandatory 2FA enrolment notice and setup button', () => {
+        const originalLocation = window.location
+        delete window.location
+        window.location = { href: '' }
 
-        render(<LoginFormContainer />)
+        try {
+            useLogin.mockReturnValue({
+                login: () => {},
+                requiresTwoFactorEnrolment: true,
+                cancelTwoFA: () => {},
+            })
 
-        expect(
-            screen.getByText('Two-factor authentication setup required')
-        ).toBeInTheDocument()
-        expect(
-            screen.getByText(
-                'Due to security policy requirements, two-factor authentication is mandatory. Set up two-factor authentication to continue using the app.'
-            )
-        ).toBeInTheDocument()
-        expect(
-            screen.getByRole('link', {
+            render(<LoginFormContainer />)
+
+            expect(
+                screen.getByText('Two-factor authentication setup required')
+            ).toBeInTheDocument()
+            expect(
+                screen.getByText(
+                    'Due to security policy requirements, two-factor authentication is mandatory. Set up two-factor authentication to continue using the app.'
+                )
+            ).toBeInTheDocument()
+            
+            const setupButton = screen.getByRole('button', {
                 name: 'Set up two-factor authentication',
             })
-        ).toHaveAttribute('href', '/dhis-web-user-profile/#/twoFactor')
+            expect(setupButton).toBeInTheDocument()
+            
+            setupButton.click()
+            expect(window.location.href).toBe('/dhis-web-user-profile/#/twoFactor')
+        } finally {
+            window.location = originalLocation
+        }
     })
 })

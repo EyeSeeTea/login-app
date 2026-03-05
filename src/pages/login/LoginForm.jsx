@@ -69,16 +69,17 @@ export const LoginForm = ({
 
             {requiresTwoFactorEnrolment && (
                 <div style={{ marginTop: '16px' }}>
-                    <a
-                        href={`${baseUrl ?? ''}/dhis-web-user-profile/#/twoFactor`}
-                        style={{ display: 'block' }}
+                    <Button
+                        primary
+                        large
+                        onClick={() => {
+                            window.location.href = `${baseUrl ?? ''}/dhis-web-user-profile/#/twoFactor`
+                        }}
                     >
-                        <Button primary large fluid>
-                            {i18n.t('Set up two-factor authentication', {
-                                lngs,
-                            })}
-                        </Button>
-                    </a>
+                        {i18n.t('Set up two-factor authentication', {
+                            lngs,
+                        })}
+                    </Button>
                 </div>
             )}
 
