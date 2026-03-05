@@ -249,6 +249,26 @@ describe('useLogin', () => {
         expect(result.current.unknownStatus).toBe(true)
     })
 
+    it('sets requiresTwoFactorEnrolment to true after receiving REQUIRES_TWO_FACTOR_ENROLMENT', async () => {
+        useDataMutation.mockImplementation((mutation, options) => [
+            () => {
+                options.onComplete({
+                    loginStatus: 'REQUIRES_TWO_FACTOR_ENROLMENT',
+                })
+            },
+            { loading: false },
+        ])
+
+        const { result } = renderHook(() => useLogin())
+        expect(result.current.loading).toBe(false)
+        act(() => {
+            result.current.login()
+        })
+        expect(result.current.loading).toBe(false)
+        expect(result.current.requiresTwoFactorEnrolment).toBe(true)
+        expect(result.current.unknownStatus).toBe(false)
+    })
+
     it('sets twoFAVerificationRequired to true first time after receiving SMS_TWO_FACTOR_CODE_SENT', async () => {
         useDataMutation.mockImplementation((mutation, options) => [
             () => {

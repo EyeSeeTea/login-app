@@ -1,7 +1,9 @@
-import { ReactFinalForm } from '@dhis2/ui'
+import i18n from '@dhis2/d2-i18n'
+import { Button, ReactFinalForm } from '@dhis2/ui'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { checkIsLoginFormValid } from '../../helpers/index.js'
+import { useLoginConfig } from '../../providers/index.js'
 import { InnerLoginForm } from './InnerLoginForm.jsx'
 import { LoginErrors } from './LoginErrors.jsx'
 
@@ -13,6 +15,7 @@ export const LoginForm = ({
     smsTwoFAVerificationRequired,
     twoFACodeRequired,
     twoFAIncorrect,
+    requiresTwoFactorEnrolment,
     emailTwoFAIncorrect,
     smsTwoFAIncorrect,
     accountInaccessible,
@@ -27,6 +30,7 @@ export const LoginForm = ({
 }) => {
     const [formSubmitted, setFormSubmitted] = useState(false)
     const [isResetButtonPressed, setIsResetButtonPressed] = useState(false)
+    const { baseUrl } = useLoginConfig()
 
     if (!login) {
         return null
@@ -51,6 +55,7 @@ export const LoginForm = ({
                 lngs={lngs}
                 error={error}
                 twoFAIncorrect={twoFAIncorrect}
+                requiresTwoFactorEnrolment={requiresTwoFactorEnrolment}
                 passwordExpired={passwordExpired}
                 passwordResetEnabled={passwordResetEnabled}
                 accountInaccessible={accountInaccessible}
@@ -62,29 +67,47 @@ export const LoginForm = ({
                 twoFAVerificationRequired={twoFAVerificationRequired}
             />
 
-            <ReactFinalForm.Form onSubmit={handleLogin}>
-                {({ handleSubmit }) => (
-                    <InnerLoginForm
-                        handleSubmit={handleSubmit}
-                        formSubmitted={formSubmitted}
-                        twoFAVerificationRequired={twoFAVerificationRequired}
-                        showResentCode={
-                            emailtwoFAVerificationRequired ||
-                            emailTwoFAIncorrect ||
-                            smsTwoFAVerificationRequired ||
-                            smsTwoFAIncorrect
-                        }
-                        resendTwoFACode={resendTwoFACode}
-                        twoFAIncorrect={twoFAIncorrect}
-                        cancelTwoFA={cancelTwoFA}
-                        lngs={lngs}
-                        loading={loading}
-                        setFormUserName={setFormUserName}
-                        isResetButtonPressed={isResetButtonPressed}
-                        setIsResetButtonPressed={setIsResetButtonPressed}
-                    />
-                )}
-            </ReactFinalForm.Form>
+            {requiresTwoFactorEnrolment && (
+                <div style={{ marginTop: '16px' }}>
+                    <Button
+                        primary
+                        large
+                        onClick={() => {
+                            window.location.href = `${baseUrl ?? ''}/dhis-web-user-profile/#/twoFactor`
+                        }}
+                    >
+                        {i18n.t('Set up two-factor authentication', {
+                            lngs,
+                        })}
+                    </Button>
+                </div>
+            )}
+
+            {!requiresTwoFactorEnrolment && (
+                <ReactFinalForm.Form onSubmit={handleLogin}>
+                    {({ handleSubmit }) => (
+                        <InnerLoginForm
+                            handleSubmit={handleSubmit}
+                            formSubmitted={formSubmitted}
+                            twoFAVerificationRequired={twoFAVerificationRequired}
+                            showResentCode={
+                                emailtwoFAVerificationRequired ||
+                                emailTwoFAIncorrect ||
+                                smsTwoFAVerificationRequired ||
+                                smsTwoFAIncorrect
+                            }
+                            resendTwoFACode={resendTwoFACode}
+                            twoFAIncorrect={twoFAIncorrect}
+                            cancelTwoFA={cancelTwoFA}
+                            lngs={lngs}
+                            loading={loading}
+                            setFormUserName={setFormUserName}
+                            isResetButtonPressed={isResetButtonPressed}
+                            setIsResetButtonPressed={setIsResetButtonPressed}
+                        />
+                    )}
+                </ReactFinalForm.Form>
+            )}
         </>
     )
 }
@@ -100,6 +123,7 @@ LoginForm.propTypes = {
     login: PropTypes.func,
     passwordExpired: PropTypes.bool,
     passwordResetEnabled: PropTypes.bool,
+    requiresTwoFactorEnrolment: PropTypes.bool,
     resendTwoFACode: PropTypes.func,
     setFormUserName: PropTypes.func,
     smsTwoFAIncorrect: PropTypes.bool,

@@ -33,6 +33,7 @@ export const LoginFormContainer = () => {
         smsTwoFAVerificationRequired,
         smsTwoFAIncorrect,
         twoFAIncorrect,
+        requiresTwoFactorEnrolment,
         accountInaccessible,
         passwordExpired,
         twoFACodeRequired,
@@ -91,6 +92,7 @@ export const LoginFormContainer = () => {
                 emailtwoFAVerificationRequired={emailtwoFAVerificationRequired}
                 smsTwoFAVerificationRequired={smsTwoFAVerificationRequired}
                 twoFAIncorrect={twoFAIncorrect}
+                requiresTwoFactorEnrolment={requiresTwoFactorEnrolment}
                 emailTwoFAIncorrect={emailTwoFAIncorrect}
                 smsTwoFAIncorrect={smsTwoFAIncorrect}
                 twoFACodeRequired={twoFACodeRequired}
@@ -101,7 +103,7 @@ export const LoginFormContainer = () => {
                 error={error}
                 loading={loading}
             />
-            {!twoFAVerificationRequired && (
+            {!twoFAVerificationRequired && !requiresTwoFactorEnrolment && (
                 <>
                     <LoginLinks formUserName={formUserName} />
                     <OIDCLoginOptions />

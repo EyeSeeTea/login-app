@@ -5,13 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-03-05T07:31:43.512Z\n"
-"PO-Revision-Date: 2025-03-05T07:31:43.528Z\n"
-"POT-Creation-Date: 2025-03-04T11:41:36.161Z\n"
-"PO-Revision-Date: 2025-03-04T11:41:36.161Z\n"
-"POT-Creation-Date: 2025-02-17T15:56:02.338Z\n"
-"PO-Revision-Date: 2025-02-17T15:56:02.338Z\n"
-
+"POT-Creation-Date: 2026-03-03T14:28:07.138Z\n"
+"PO-Revision-Date: 2026-03-03T14:28:07.138Z\n"
 
 msgid "Please confirm that you are not a robot by checking the checkbox."
 msgstr "Please confirm that you are not a robot by checking the checkbox."
@@ -199,6 +194,16 @@ msgstr "Authentication code is required"
 msgid "Incorrect authentication code"
 msgstr "Incorrect authentication code"
 
+msgid "Two-factor authentication setup required"
+msgstr "Two-factor authentication setup required"
+
+msgid ""
+"Due to security policy requirements, two-factor authentication is "
+"mandatory. Set up two-factor authentication to continue using the app."
+msgstr ""
+"Due to security policy requirements, two-factor authentication is "
+"mandatory. Set up two-factor authentication to continue using the app."
+
 msgid "Password expired"
 msgstr "Password expired"
 
@@ -210,6 +215,9 @@ msgstr "Contact your system administrator."
 
 msgid "Account not accessible"
 msgstr "Account not accessible"
+
+msgid "Set up two-factor authentication"
+msgstr "Set up two-factor authentication"
 
 msgid "Two-factor authentication"
 msgstr "Two-factor authentication"
