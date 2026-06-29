@@ -30,7 +30,10 @@ export const LoginFormContainer = () => {
         OTPtwoFAVerificationRequired,
         emailtwoFAVerificationRequired,
         emailTwoFAIncorrect,
+        smsTwoFAVerificationRequired,
+        smsTwoFAIncorrect,
         twoFAIncorrect,
+        requiresTwoFactorEnrolment,
         accountInaccessible,
         passwordExpired,
         twoFACodeRequired,
@@ -69,6 +72,16 @@ export const LoginFormContainer = () => {
                     </p>
                 </FormSubtitle>
             )}
+            {(smsTwoFAVerificationRequired || smsTwoFAIncorrect) && (
+                <FormSubtitle>
+                    <p>
+                        {i18n.t(
+                            'We have sent you an SMS with your authentication code. Enter it below to log in.',
+                            { lngs }
+                        )}
+                    </p>
+                </FormSubtitle>
+            )}
             <LoginForm
                 setFormUserName={setFormUserName}
                 lngs={lngs}
@@ -77,8 +90,11 @@ export const LoginFormContainer = () => {
                 resendTwoFACode={resendTwoFACode}
                 twoFAVerificationRequired={twoFAVerificationRequired}
                 emailtwoFAVerificationRequired={emailtwoFAVerificationRequired}
+                smsTwoFAVerificationRequired={smsTwoFAVerificationRequired}
                 twoFAIncorrect={twoFAIncorrect}
+                requiresTwoFactorEnrolment={requiresTwoFactorEnrolment}
                 emailTwoFAIncorrect={emailTwoFAIncorrect}
+                smsTwoFAIncorrect={smsTwoFAIncorrect}
                 twoFACodeRequired={twoFACodeRequired}
                 accountInaccessible={accountInaccessible}
                 passwordExpired={passwordExpired}
@@ -87,7 +103,7 @@ export const LoginFormContainer = () => {
                 error={error}
                 loading={loading}
             />
-            {!twoFAVerificationRequired && (
+            {!twoFAVerificationRequired && !requiresTwoFactorEnrolment && (
                 <>
                     <LoginLinks formUserName={formUserName} />
                     <OIDCLoginOptions />

@@ -248,4 +248,103 @@ describe('useLogin', () => {
         expect(result.current.loading).toBe(false)
         expect(result.current.unknownStatus).toBe(true)
     })
+
+    it('sets requiresTwoFactorEnrolment to true after receiving REQUIRES_TWO_FACTOR_ENROLMENT', async () => {
+        useDataMutation.mockImplementation((mutation, options) => [
+            () => {
+                options.onComplete({
+                    loginStatus: 'REQUIRES_TWO_FACTOR_ENROLMENT',
+                })
+            },
+            { loading: false },
+        ])
+
+        const { result } = renderHook(() => useLogin())
+        expect(result.current.loading).toBe(false)
+        act(() => {
+            result.current.login()
+        })
+        expect(result.current.loading).toBe(false)
+        expect(result.current.requiresTwoFactorEnrolment).toBe(true)
+        expect(result.current.unknownStatus).toBe(false)
+    })
+
+    it('sets twoFAVerificationRequired to true first time after receiving SMS_TWO_FACTOR_CODE_SENT', async () => {
+        useDataMutation.mockImplementation((mutation, options) => [
+            () => {
+                options.onComplete({
+                    loginStatus: 'SMS_TWO_FACTOR_CODE_SENT',
+                })
+            },
+            { loading: false },
+        ])
+        const { result } = renderHook(() => useLogin())
+        expect(result.current.loading).toBe(false)
+        act(() => result.current.login())
+        expect(result.current.loading).toBe(false)
+        expect(result.current.twoFAVerificationRequired).toBe(true)
+        expect(result.current.smsTwoFAVerificationRequired).toBe(true)
+    })
+
+    it('sets smsTwoFAIncorrect to true second time after receiving SMS_TWO_FACTOR_CODE_SENT', async () => {
+        useDataMutation.mockImplementation((mutation, options) => [
+            () => {
+                options.onComplete({
+                    loginStatus: 'SMS_TWO_FACTOR_CODE_SENT',
+                })
+            },
+            { loading: false },
+        ])
+        const { result } = renderHook(() => useLogin())
+        expect(result.current.loading).toBe(false)
+        act(() => {
+            result.current.login()
+            result.current.login()
+        })
+        expect(result.current.loading).toBe(false)
+        expect(result.current.twoFAVerificationRequired).toBe(true)
+        expect(result.current.smsTwoFAIncorrect).toBe(true)
+    })
+
+    it('sets smsTwoFAIncorrect to true after receiving INCORRECT_TWO_FACTOR_CODE_SMS', async () => {
+        useDataMutation.mockImplementation((mutation, options) => [
+            () => {
+                options.onComplete({
+                    loginStatus: 'INCORRECT_TWO_FACTOR_CODE_SMS',
+                })
+            },
+            { loading: false },
+        ])
+        const { result } = renderHook(() => useLogin())
+        expect(result.current.loading).toBe(false)
+        act(() => {
+            result.current.login()
+            result.current.login()
+        })
+        expect(result.current.loading).toBe(false)
+        expect(result.current.twoFAVerificationRequired).toBe(true)
+        expect(result.current.smsTwoFAIncorrect).toBe(true)
+    })
+
+    it('clears SMS 2FA information when cancelTwoFA is called', async () => {
+        useDataMutation.mockImplementation((mutation, options) => [
+            () => {
+                options.onComplete({
+                    loginStatus: 'SMS_TWO_FACTOR_CODE_SENT',
+                })
+            },
+            { loading: false },
+        ])
+        const { result } = renderHook(() => useLogin())
+        expect(result.current.loading).toBe(false)
+        act(() => {
+            result.current.login()
+            result.current.login()
+            result.current.cancelTwoFA()
+        })
+        expect(result.current.loading).toBe(false)
+        expect(result.current.twoFAVerificationRequired).toBe(false)
+        expect(result.current.smsTwoFAVerificationRequired).toBe(false)
+        expect(result.current.smsTwoFAIncorrect).toBe(false)
+    })
 })

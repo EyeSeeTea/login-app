@@ -362,4 +362,39 @@ describe('LoginForm', () => {
             screen.getByText('Contact your system administrator.')
         ).toBeInTheDocument()
     })
+
+    it('Shows mandatory 2FA enrolment notice and setup button', () => {
+        const originalLocation = window.location
+        delete window.location
+        window.location = { href: '' }
+
+        try {
+            useLogin.mockReturnValue({
+                login: () => {},
+                requiresTwoFactorEnrolment: true,
+                cancelTwoFA: () => {},
+            })
+
+            render(<LoginFormContainer />)
+
+            expect(
+                screen.getByText('Two-factor authentication setup required')
+            ).toBeInTheDocument()
+            expect(
+                screen.getByText(
+                    'Due to security policy requirements, two-factor authentication is mandatory. Set up two-factor authentication to continue using the app.'
+                )
+            ).toBeInTheDocument()
+            
+            const setupButton = screen.getByRole('button', {
+                name: 'Set up two-factor authentication',
+            })
+            expect(setupButton).toBeInTheDocument()
+            
+            setupButton.click()
+            expect(window.location.href).toBe('/dhis-web-user-profile/#/twoFactor')
+        } finally {
+            window.location = originalLocation
+        }
+    })
 })

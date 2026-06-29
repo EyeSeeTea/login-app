@@ -8,11 +8,13 @@ export const LoginErrors = ({
     lngs = ['en'],
     error,
     twoFAIncorrect,
+    requiresTwoFactorEnrolment,
     passwordExpired,
     passwordResetEnabled,
     accountInaccessible,
     unknownStatus,
     emailTwoFAIncorrect,
+    smsTwoFAIncorrect,
     isResetButtonPressed,
     twoFACodeRequired,
     twoFAVerificationRequired,
@@ -61,7 +63,34 @@ export const LoginErrors = ({
             />
         )
     }
+
+    if (requiresTwoFactorEnrolment) {
+        return (
+            <FormNotice
+                title={i18n.t('Two-factor authentication setup required', {
+                    lngs,
+                })}
+                error
+            >
+                <span>
+                    {i18n.t(
+                        'Due to security policy requirements, two-factor authentication is mandatory. Set up two-factor authentication to continue using the app.',
+                        { lngs }
+                    )}
+                </span>
+            </FormNotice>
+        )
+    }
+
     if (emailTwoFAIncorrect && !isResetButtonPressed) {
+        return (
+            <FormNotice
+                title={i18n.t('Incorrect authentication code', { lngs })}
+                error
+            />
+        )
+    }
+    if (smsTwoFAIncorrect && !isResetButtonPressed) {
         return (
             <FormNotice
                 title={i18n.t('Incorrect authentication code', { lngs })}
@@ -125,6 +154,8 @@ LoginErrors.propTypes = {
     lngs: PropTypes.arrayOf(PropTypes.string),
     passwordExpired: PropTypes.bool,
     passwordResetEnabled: PropTypes.bool,
+    requiresTwoFactorEnrolment: PropTypes.bool,
+    smsTwoFAIncorrect: PropTypes.bool,
     twoFACodeRequired: PropTypes.bool,
     twoFAIncorrect: PropTypes.bool,
     twoFAVerificationRequired: PropTypes.bool,

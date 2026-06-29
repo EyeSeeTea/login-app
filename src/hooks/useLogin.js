@@ -8,25 +8,32 @@ const LOGIN_STATUSES = {
     resend2faEmail: 'EMAIL_TWO_FACTOR_CODE_SENT',
     incorrect2faEmail: 'INCORRECT_TWO_FACTOR_CODE_EMAIL',
     incorrect2faTOTP: 'INCORRECT_TWO_FACTOR_CODE_TOTP',
+    incorrect2faSMS: 'INCORRECT_TWO_FACTOR_CODE_SMS',
+    resend2faSMS: 'SMS_TWO_FACTOR_CODE_SENT',
     notEnabled2fa: 'INVALID',
     success: 'SUCCESS',
     secondAttempt2fa: 'second_attempt_incorrect_2fa', // this is internal logic to app
     secondAttempt2faEmail: 'second_attempt_incorrect_2fa_email',
     secondAttempt2faTOTP: 'second_attempt_incorrect_2fa_OTP',
+    secondAttempt2faSMS: 'second_attempt_incorrect_2fa_SMS',
     success2fa: 'SUCCESS_2fa',
     passwordExpired: 'PASSWORD_EXPIRED',
     accountDisabled: 'ACCOUNT_DISABLED',
     accountLocked: 'ACCOUNT_LOCKED',
     accountExpired: 'ACCOUNT_EXPIRED',
+    requiresTwoFactorEnrolment: 'REQUIRES_TWO_FACTOR_ENROLMENT',
 }
 const invalidTWOFA = [
     LOGIN_STATUSES.incorrect2faEmail,
     LOGIN_STATUSES.incorrect2fa,
     LOGIN_STATUSES.resend2faEmail,
     LOGIN_STATUSES.incorrect2faTOTP,
+    LOGIN_STATUSES.incorrect2faSMS,
+    LOGIN_STATUSES.resend2faSMS,
     LOGIN_STATUSES.secondAttempt2fa,
     LOGIN_STATUSES.secondAttempt2faTOTP,
     LOGIN_STATUSES.secondAttempt2faEmail,
+    LOGIN_STATUSES.secondAttempt2faSMS,
 ]
 const inaccessibleAccountStatuses = [
     LOGIN_STATUSES.accountDisabled,
@@ -72,6 +79,8 @@ export const useLogin = () => {
                 secondAttempt2fa,
                 incorrect2faTOTP,
                 secondAttempt2faTOTP,
+                resend2faSMS,
+                secondAttempt2faSMS,
             } = LOGIN_STATUSES
 
             if (
@@ -93,6 +102,8 @@ export const useLogin = () => {
                     [secondAttempt2fa]: secondAttempt2fa,
                     [incorrect2faTOTP]: secondAttempt2faTOTP,
                     [secondAttempt2faTOTP]: secondAttempt2faTOTP,
+                    [resend2faSMS]: secondAttempt2faSMS,
+                    [secondAttempt2faSMS]: secondAttempt2faSMS,
                 }
 
                 return secondAttemptMap[prev] || response.loginStatus
@@ -166,8 +177,15 @@ export const useLogin = () => {
         emailTwoFAIncorrect:
             loginStatus === LOGIN_STATUSES.secondAttempt2faEmail ||
             loginStatus === LOGIN_STATUSES.incorrect2faEmail,
+        smsTwoFAVerificationRequired:
+            loginStatus === LOGIN_STATUSES.resend2faSMS,
+        smsTwoFAIncorrect:
+            loginStatus === LOGIN_STATUSES.secondAttempt2faSMS ||
+            loginStatus === LOGIN_STATUSES.incorrect2faSMS,
         twoFANotEnabled: loginStatus === LOGIN_STATUSES.notEnabled2fa,
         passwordExpired: loginStatus === LOGIN_STATUSES.passwordExpired,
+        requiresTwoFactorEnrolment:
+            loginStatus === LOGIN_STATUSES.requiresTwoFactorEnrolment,
         accountInaccessible: inaccessibleAccountStatuses.includes(loginStatus),
         twoFACodeRequired,
         unknownStatus:
