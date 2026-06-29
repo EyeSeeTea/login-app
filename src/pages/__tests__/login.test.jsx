@@ -392,7 +392,7 @@ describe('LoginForm', () => {
             expect(setupButton).toBeInTheDocument()
             
             setupButton.click()
-            expect(window.location.href).toBe('/dhis-web-user-profile/#/twoFactor')
+            expect(window.location.href).toBe('/apps/user-profile#/twoFactor')
         } finally {
             window.location = originalLocation
         }

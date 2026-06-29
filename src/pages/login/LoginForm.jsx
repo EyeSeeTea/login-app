@@ -73,7 +73,7 @@ export const LoginForm = ({
                         primary
                         large
                         onClick={() => {
-                            window.location.href = `${baseUrl ?? ''}/dhis-web-user-profile/#/twoFactor`
+                            window.location.href = `${baseUrl ?? ''}/apps/user-profile#/twoFactor`
                         }}
                     >
                         {i18n.t('Set up two-factor authentication', {
