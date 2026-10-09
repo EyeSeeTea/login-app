@@ -19,8 +19,6 @@ export const LoginForm = ({
     emailTwoFAIncorrect,
     smsTwoFAIncorrect,
     accountInaccessible,
-    passwordExpired,
-    passwordResetEnabled,
     unknownStatus,
     error,
     loading,
@@ -56,8 +54,6 @@ export const LoginForm = ({
                 error={error}
                 twoFAIncorrect={twoFAIncorrect}
                 requiresTwoFactorEnrolment={requiresTwoFactorEnrolment}
-                passwordExpired={passwordExpired}
-                passwordResetEnabled={passwordResetEnabled}
                 accountInaccessible={accountInaccessible}
                 unknownStatus={unknownStatus}
                 emailTwoFAIncorrect={emailTwoFAIncorrect}
@@ -73,7 +69,9 @@ export const LoginForm = ({
                         primary
                         large
                         onClick={() => {
-                            window.location.href = `${baseUrl ?? ''}/apps/user-profile#/twoFactor`
+                            window.location.href = `${
+                                baseUrl ?? ''
+                            }/apps/user-profile#/twoFactor`
                         }}
                     >
                         {i18n.t('Set up two-factor authentication', {
@@ -89,7 +87,9 @@ export const LoginForm = ({
                         <InnerLoginForm
                             handleSubmit={handleSubmit}
                             formSubmitted={formSubmitted}
-                            twoFAVerificationRequired={twoFAVerificationRequired}
+                            twoFAVerificationRequired={
+                                twoFAVerificationRequired
+                            }
                             showResentCode={
                                 emailtwoFAVerificationRequired ||
                                 emailTwoFAIncorrect ||
@@ -121,8 +121,6 @@ LoginForm.propTypes = {
     lngs: PropTypes.arrayOf(PropTypes.string),
     loading: PropTypes.bool,
     login: PropTypes.func,
-    passwordExpired: PropTypes.bool,
-    passwordResetEnabled: PropTypes.bool,
     requiresTwoFactorEnrolment: PropTypes.bool,
     resendTwoFACode: PropTypes.func,
     setFormUserName: PropTypes.func,
